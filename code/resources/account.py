@@ -1,5 +1,6 @@
 from flask_restful import Resource, reqparse
 from models.account import Account as AccountModel
+import json
 
 class Account(Resource):
     parser = reqparse.RequestParser()
@@ -30,6 +31,6 @@ class Account(Resource):
 
         user = AccountModel.find_by_user_id(user_id)
         if user:
-            return {"data": user}, 200
+            return {"data": json.dumps(user)}, 200
         else:
             return {"message": "No Account Associated yet"}, 404
