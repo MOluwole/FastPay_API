@@ -4,8 +4,8 @@ from models.account import Account as AccountModel
 class Account(Resource):
     parser = reqparse.RequestParser()
 
-    parser.add_argument('user_id', type=str, required=True, help="User ID is required")
-    parser.add_argument('balance', type=str, required=True, help="User Balance is required")
+    parser.add_argument('user_id', type=str)
+    parser.add_argument('balance', type=str)
 
     def post(self):
         data = Account.parser.parse_args()
