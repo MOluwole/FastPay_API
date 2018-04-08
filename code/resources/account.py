@@ -30,7 +30,8 @@ class Account(Resource):
         user_id = data['user_id']
 
         user = AccountModel.find_by_user_id(user_id)
+        print user
         if user:
-            return {"data": json.dumps(user)}, 200
+            return {"data": user}, 200
         else:
             return {"message": "No Account Associated yet"}, 404
