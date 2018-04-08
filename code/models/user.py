@@ -26,6 +26,9 @@ class User(db.Model):
 
         self.created_at = self.date + " " + self.time
 
+    @classmethod
+    def return_json(cls, user_id, email_id, phone_num, created_at):
+        return {'user_id': user_id, 'email_id': email_id, 'phone_num': phone_num, 'created_at': created_at}
 
     @classmethod
     def find_by_id(cls, _id):

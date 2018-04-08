@@ -29,6 +29,10 @@ class Transaction(db.Model):
         self.transaction_date = date
 
     @classmethod
+    def return_json(cls, type_, sender, receiver, amount, transaction_details, transaction_date, transaction_time):
+        return {'type_': type_, 'sender': sender, 'receiver': receiver, 'amount': amount, 'transaction_details': transaction_details, 'transaction_date': transaction_date, 'transaction_time': transaction_time}
+
+    @classmethod
     def find_transaction(cls, user_id):
         return cls.query.filter((cls.sender==user_id) | (cls.receiver==user_id)).all()
 

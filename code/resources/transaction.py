@@ -55,9 +55,14 @@ class Transaction(Resource):
             user_id = data['receiver']
 
         transaction = TransactionModel.find_transaction(user_id)
+
+        transaction_data = []
+        for item in transaction:
+            single_data = TransactionModel.return_json(item.type_, item.sender, item.receiver, item.amount, item.transaction_details, item.transaction_date, item.transaction_time)
+            transaction_data.append(single_data)
         # transaction = TransactionModel.query.filter((TransactionModel.sender) | (TransactionModel.receiver))
 
         if transaction:
-            return {'data': transaction}, 200
+            return {'data': transaction_data}, 200
         else:
             return {"message": "No Transaction yet"}, 404

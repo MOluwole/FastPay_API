@@ -14,6 +14,10 @@ class Account(db.Model):
         self.balance = balance
 
     @classmethod
+    def return_json(cls, user_id, balance):
+        return {'user_id': user_id, 'balance': balance}
+
+    @classmethod
     def find_by_user_id(cls, user_id):
         return cls.query.filter_by(user_id=user_id).first()
 
