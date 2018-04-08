@@ -4,8 +4,8 @@ from models.user import User as UserModel
 class User(Resource):
     parser = reqparse.RequestParser()
 
-    parser.add_argument('user_id', type=str, required=True, help="User ID is Required")
-    parser.add_argument('password', type=str, required=True, help="Password is required")
+    parser.add_argument('user_id', type=str)
+    parser.add_argument('password', type=str)
     parser.add_argument('email_id', type=str)
     parser.add_argument('phone_num', type=str)
 
@@ -25,3 +25,25 @@ class User(Resource):
 
         user_details.save_user()
         return {'message': 'User Created Successful'}, 201
+
+    def get(self):
+        data = User.parser.parse_args()
+
+        user_id = data['user_id']
+        email = data['email']
+        phone_num = data['phone_num']
+
+        user = UserModel.find_by_user_id(user_id)
+        if user:
+            return {"data": user}, 200
+
+        user = UserModel.find_by_email(email)
+        if user:
+            return {"data": user}, 200
+
+        user = UserModel.find_by_phone(phone_num)
+        if user:
+            return {"data": user}, 200
+
+
+        return {"message": "User Not Found"}, 400

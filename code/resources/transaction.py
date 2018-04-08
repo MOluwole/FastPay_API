@@ -23,6 +23,7 @@ class Transaction(Resource):
         transaction = TransactionModel(type_, sender, receiver, amount, details)
 
         sender_account = Account.find_by_user_id(sender)
+        receiver_account = Account.find_by_user_id(receiver)
 
         if sender_account:
             balance = int(str(sender_account.balance))
@@ -31,8 +32,13 @@ class Transaction(Resource):
             if balance < int_amount:
                 return {'message': 'Insufficient Balance'}, 400
 
-            new_balance = balance - amount
+            new_balance = balance - int_amount
             Account.update_account(sender, new_balance)
+
+            receiver_balance = int(str(receiver_account.balance))
+            receiver_new_balance = receiver_balance + int_amount
+
+            Account.update_account(receiver, receiver_new_balance)
 
             transaction.save_transaction()
 

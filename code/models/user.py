@@ -35,8 +35,13 @@ class User(db.Model):
     def find_by_user_id(cls, user_id):
         return cls.query.filter_by(user_id=user_id).first()
 
+    @classmethod
     def find_by_email(cls, email_id):
         return cls.query.filter_by(email_id=email_id).first()
+
+    @classmethod
+    def find_by_phone(cls, phone_num):
+        return cls.query.filter_by(phone_num=phone_num).first()
 
     def save_user(self):
         db.session.add(self)
