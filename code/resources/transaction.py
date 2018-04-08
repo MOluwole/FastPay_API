@@ -35,10 +35,10 @@ class Transaction(Resource):
             new_balance = balance - int_amount
             Account.update_account(sender, new_balance)
 
-            receiver_balance = int(str(receiver_account.balance))
-            receiver_new_balance = receiver_balance + int_amount
-
-            Account.update_account(receiver, receiver_new_balance)
+            if receiver_account:
+                receiver_balance = int(str(receiver_account.balance))
+                receiver_new_balance = receiver_balance + int_amount
+                Account.update_account(receiver, receiver_new_balance)
 
             transaction.save_transaction()
 
